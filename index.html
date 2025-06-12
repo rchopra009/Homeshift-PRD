@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeShift: Interactive Product Requirement Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Warm Neutral Harmony" - A base of warm grays (slate) and off-white (stone), with a sophisticated dark teal as an accent. This palette is professional, modern, and evokes a sense of trust and calm. -->
+    <!-- Application Structure Plan: The application is designed as an interactive, single-page dashboard translating the PRD into a narrative flow. It guides the user through the core concepts: Vision -> The Problem -> The Solution -> User Personas -> Core Features -> Monetization -> Founder. This structure allows a stakeholder to grasp the entire product strategy in a digestible, engaging format rather than reading a static document. Smooth-scrolling navigation and interactive elements encourage exploration. -->
+    <!-- Visualization & Content Choices: PRD data is brought to life. KPIs are shown with animated counters for impact (Goal: Inform). User personas are presented in clickable cards to reveal details (Goal: Organize/Engage). The core features are visualized as an interactive diagram (Goal: Organize/Explain), and the monetization model is a clear, tiered visual layout (Goal: Compare/Inform). A new section for the Founder highlights their vision and background with an image and adapted text (Goal: Inform/Inspire). All visualizations use vanilla JS and HTML/CSS to maintain a lightweight footprint. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f5; /* Zinc 100 */
+            color: #18181b; /* Zinc 900 */
+        }
+        .accent-bg { background-color: #0d9488; } /* Teal 600 */
+        .accent-text { color: #0d9488; }
+        .accent-border { border-color: #0d9488; }
+        .secondary-bg { background-color: #ffffff; }
+        .secondary-text { color: #52525b; } /* Zinc 600 */
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .section-title {
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+        .kpi-value {
+            font-weight: 900;
+            font-feature-settings: 'tnum' on, 'lnum' on;
+        }
+        .nav-link {
+             position: relative;
+             transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0d9488;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body x-data="{ activeSection: 'overview' }">
+
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#overview" class="text-2xl font-bold accent-text">HomeShift PRD</a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#problem" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'problem' }">Problem</a>
+                <a href="#solution" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'solution' }">Solution</a>
+                <a href="#users" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'users' }">Users</a>
+                <a href="#features" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'features' }">Features</a>
+                <a href="#monetization" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'monetization' }">Model</a>
+                <a href="#founder" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'founder' }">Founder</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="overview" class="min-h-[80vh] flex items-center bg-white" x-intersect:enter="activeSection = 'overview'">
+            <div class="container mx-auto px-6 py-16">
+                <div class="max-w-4xl">
+                    <span class="text-sm font-bold uppercase accent-text">PRD Version 1.0 - June 12, 2025</span>
+                    <h1 class="text-5xl md:text-7xl font-black text-zinc-800 leading-tight my-4">HomeShift: Your Home. Your Next Adventure.</h1>
+                    <p class="text-2xl md:text-3xl font-semibold accent-text mb-6">A New Way to Live, Explore, and Thrive Without Buying or Renting.</p>
+                    <p class="text-lg md:text-xl secondary-text">HomeShift is a revolutionary platform for homeowners to seamlessly exchange homes for extended periods, opening doors to new cities, lifestyles, or temporary relocations without the massive costs and hassles of traditional real estate. This document outlines the product requirements for HomeShift, a platform designed to unlock long-term lifestyle flexibility for homeowners by eliminating the friction of traditional real estate transactions.</p>
+                </div>
+                <div class="mt-12 grid md:grid-cols-3 gap-8">
+                    <div class="bg-zinc-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-zinc-800">Vision</h3>
+                        <p class="secondary-text text-sm mt-1">To empower every homeowner to seamlessly and confidently explore new living experiences.</p>
+                    </div>
+                    <div class="bg-zinc-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-zinc-800">Mission</h3>
+                        <p class="secondary-text text-sm mt-1">To build the world's most trusted, intelligent, and frictionless platform for long-term, non-monetary home exchanges.</p>
+                    </div>
+                    <div class="bg-zinc-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-zinc-800">Primary Goal</h3>
+                        <p class="secondary-text text-sm mt-1">Achieve 10,000 active listings and 500 successful long-term exchanges within 12 months post-launch.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20 md:py-32" x-intersect:enter="activeSection = 'problem'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title text-zinc-800">1. The Problem Statement</h2>
+                    <p class="mt-4 text-lg secondary-text">Current housing solutions fail to address the growing demand for **long-term, flexible residential experiences** without significant capital deployment or transaction friction.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="secondary-bg p-8 rounded-2xl shadow-lg card-hover text-center">
+                        <div class="text-4xl mb-4">🏦</div>
+                        <h3 class="text-xl font-bold mb-2">High Transaction Friction</h3>
+                        <p class="secondary-text text-sm">Buying and selling incurs massive costs (fees, taxes) and is a permanent, high-risk solution for what may be a temporary need.</p>
+                    </div>
+                    <div class="secondary-bg p-8 rounded-2xl shadow-lg card-hover text-center">
+                        <div class="text-4xl mb-4">🏢</div>
+                        <h3 class="text-xl font-bold mb-2">Impersonal & Costly Rentals</h3>
+                        <p class="secondary-text text-sm">Long-term rentals are expensive, lack the comfort of a home, and create the dual burden of managing an empty primary residence.</p>
+                    </div>
+                     <div class="secondary-bg p-8 rounded-2xl shadow-lg card-hover text-center">
+                        <div class="text-4xl mb-4">🌴</div>
+                        <h3 class="text-xl font-bold mb-2">Niche Vacation Focus</h3>
+                        <p class="secondary-text text-sm">Existing exchange sites are built for short-term tourism, lacking the legal, trust, and matching depth for long-term lifestyle swaps.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="solution" class="py-20 md:py-32 bg-zinc-800 text-white" x-intersect:enter="activeSection = 'solution'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title">2. The HomeShift Solution: How it Works</h2>
+                    <p class="mt-4 text-lg text-zinc-300">HomeShift empowers homeowners to embark on long-term home exchanges. You continue to own your home, and simply swap living spaces with a trusted counterpart. It's a game-changing way to experience new places, try new lifestyles, or manage life transitions without the financial burden of buying or continuous renting. This is how we bring unprecedented flexibility to your doorstep.</p>
+                </div>
+                <div class="bg-zinc-700 p-10 rounded-2xl max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-teal-300">Key Success Metrics (KPIs)</h3>
+                            <p class="text-zinc-400 mb-6">Our success is measured by the health and growth of our ecosystem. These are our primary targets for Year 1.</p>
+                             <div class="space-y-4">
+                                <div class="flex items-baseline">
+                                    <span class="text-4xl kpi-value text-white" x-data="counter(10000)"></span>
+                                    <span class="ml-2 font-semibold">Verified Listings</span>
+                                </div>
+                                <div class="flex items-baseline">
+                                    <span class="text-4xl kpi-value text-white" x-data="counter(500)"></span>
+                                    <span class="ml-2 font-semibold">Completed Exchanges</span>
+                                </div>
+                                <div class="flex items-baseline">
+                                    <span class="text-4xl kpi-value text-white" x-data="counter(70)"></span><span class="text-4xl kpi-value text-white">%</span>
+                                    <span class="ml-2 font-semibold">Subscription Renewal Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative h-64">
+                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full bg-teal-500/20 flex items-center justify-center border-2 border-teal-400">
+                                <span class="text-5xl">🏠</span>
+                            </div>
+                             <div class="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-32 rounded-full bg-zinc-600 flex items-center justify-center">
+                                <span class="text-4xl">🤝</span>
+                            </div>
+                            <div class="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-32 rounded-full bg-zinc-600 flex items-center justify-center">
+                                <span class="text-4xl">🌎</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="users" class="py-20 md:py-32" x-data="{ activeUser: 'family' }" x-intersect:enter="activeSection = 'users'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title text-zinc-800">3. User Personas</h2>
+                    <p class="mt-4 text-lg secondary-text">HomeShift serves distinct user archetypes united by a common need for flexibility. Select a persona to view their profile.</p>
+                </div>
+                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                    <button @click="activeUser = 'family'" :class="{'accent-bg text-white': activeUser === 'family', 'bg-white text-zinc-700': activeUser !== 'family'}" class="px-4 py-2 text-sm font-semibold rounded-full shadow">Growing Family</button>
+                    <button @click="activeUser = 'nester'" :class="{'accent-bg text-white': activeUser === 'nester', 'bg-white text-zinc-700': activeUser !== 'nester'}" class="px-4 py-2 text-sm font-semibold rounded-full shadow">Empty Nester</button>
+                    <button @click="activeUser = 'nomad'" :class="{'accent-bg text-white': activeUser === 'nomad', 'bg-white text-zinc-700': activeUser !== 'nomad'}" class="px-4 py-2 text-sm font-semibold rounded-full shadow">Digital Nomad</button>
+                    <button @click="activeUser = 'transitioner'" :class="{'accent-bg text-white': activeUser === 'transitioner', 'bg-white text-zinc-700': activeUser !== 'transitioner'}" class="px-4 py-2 text-sm font-semibold rounded-full shadow">Life Transitioner</button>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-xl max-w-4xl mx-auto min-h-[20rem]">
+                    <div x-show="activeUser === 'family'" x-cloak x-transition.opacity.duration.300ms>
+                        <h3 class="text-2xl font-bold accent-text">The "Growing Pains" Family</h3>
+                        <p class="font-semibold text-zinc-800 mt-2">The Smiths, Bellevue, WA</p>
+                        <p class="secondary-text mt-4">Own a 2-bed condo, but with two young children, they are desperate for more space and a yard. They want to "try out" a new city like Orlando for a year to be near family, but selling their high-value condo is too risky and final.</p>
+                        <p class="mt-4 text-sm"><strong class="text-zinc-800">Primary Motivation:</strong> Test a new lifestyle without the immense financial and logistical burden of a permanent move.</p>
+                    </div>
+                     <div x-show="activeUser === 'nester'" x-cloak x-transition.opacity.duration.300ms>
+                        <h3 class="text-2xl font-bold accent-text">The "Empty Nester" Explorer</h3>
+                        <p class="font-semibold text-zinc-800 mt-2">The Johnsons, Redmond, WA</p>
+                        <p class="secondary-text mt-4">Their large family home is now mostly empty. They dream of living in Spain for 6 months to immerse themselves in the culture, but the cost of a long-term rental plus the worry of leaving their primary home vacant is a major barrier.</p>
+                        <p class="mt-4 text-sm"><strong class="text-zinc-800">Primary Motivation:</strong> Achieve cost-effective, authentic long-term travel while ensuring their primary home is secure and occupied.</p>
+                    </div>
+                     <div x-show="activeUser === 'nomad'" x-cloak x-transition.opacity.duration.300ms>
+                        <h3 class="text-2xl font-bold accent-text">The "Digital Nomad" with Roots</h3>
+                        <p class="font-semibold text-zinc-800 mt-2">Alex, Austin, TX</p>
+                        <p class="secondary-text mt-4">Works fully remotely and loves to experience new places for 1-3 months at a time. Alex is tired of the high cost and impersonal nature of endless Airbnbs and seeks a more stable, "home-like" environment with a dedicated workspace.</p>
+                        <p class="mt-4 text-sm"><strong class="text-zinc-800">Primary Motivation:</strong> Access comfortable, cost-effective, and work-ready homes in desirable locations for medium-term stays.</p>
+                    </div>
+                     <div x-show="activeUser === 'transitioner'" x-cloak x-transition.opacity.duration.300ms>
+                        <h3 class="text-2xl font-bold accent-text">The "Life Transitioner"</h3>
+                        <p class="font-semibold text-zinc-800 mt-2">Maria, San Francisco, CA</p>
+                        <p class="secondary-text mt-4">Needs to move to Phoenix for 9 months to care for an aging parent. Selling her cherished SF townhouse is not an option, and paying for a second residence for nearly a year is financially daunting.</p>
+                        <p class="mt-4 text-sm"><strong class="text-zinc-800">Primary Motivation:</strong> Find a secure and financially viable housing solution to manage a temporary but essential life event without uprooting her life permanently.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 md:py-32 bg-zinc-800 text-white" x-data="{ activeFeature: 'trust' }" x-intersect:enter="activeSection = 'features'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title">4. Core Features & Functionality</h2>
+                    <p class="mt-4 text-lg text-zinc-300">Our platform is engineered to solve the core challenges of trust, matching, and legal complexity through three integrated pillars.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-1">
+                    <button @click="activeFeature = 'trust'" class="p-6 text-left rounded-t-lg md:rounded-l-lg md:rounded-tr-none" :class="{'bg-zinc-700': activeFeature === 'trust', 'bg-zinc-900/50 hover:bg-zinc-900/80': activeFeature !== 'trust'}">
+                        <h4 class="text-lg font-bold text-teal-300">🛡️ High-Trust Infrastructure</h4>
+                        <p class="text-sm text-zinc-400 mt-1">Solving the identity and security problem.</p>
+                    </button>
+                    <button @click="activeFeature = 'engine'" class="p-6 text-left" :class="{'bg-zinc-700': activeFeature === 'engine', 'bg-zinc-900/50 hover:bg-zinc-900/80': activeFeature !== 'engine'}">
+                        <h4 class="text-lg font-bold text-teal-300">⚙️ Intelligent Swap Engine</h4>
+                        <p class="text-sm text-zinc-400 mt-1">Solving the discovery and liquidity problem.</p>
+                    </button>
+                    <button @click="activeFeature = 'legal'" class="p-6 text-left rounded-b-lg md:rounded-r-lg md:rounded-bl-none" :class="{'bg-zinc-700': activeFeature === 'legal', 'bg-zinc-900/50 hover:bg-zinc-900/80': activeFeature !== 'legal'}">
+                        <h4 class="text-lg font-bold text-teal-300">⚖️ HomeShift Legal Guardian</h4>
+                        <p class="text-sm text-zinc-400 mt-1">Solving the contract and insurance problem.</p>
+                    </button>
+                </div>
+                <div class="bg-zinc-700 mt-1 p-8 rounded-b-lg md:rounded-r-lg min-h-[16rem]">
+                     <div x-show="activeFeature === 'trust'" x-cloak>
+                        <ul class="space-y-3 text-zinc-300">
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Tiered Verification:</strong> Identity (KYC) and property ownership (HomeProof) are mandatory for all listings.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Concierge Video Intros:</strong> Humanizes the process and builds rapport before any interaction.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Mutual Trust Scores:</strong> A reputation system built on successful exchanges ensures accountability.</span></li>
+                        </ul>
+                    </div>
+                     <div x-show="activeFeature === 'engine'" x-cloak>
+                        <ul class="space-y-3 text-zinc-300">
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Lifestyle Equivalency Matching:</strong> Algorithm that matches homes based on desired living experience, not just specs.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Asynchronous & Daisy-Chain Logic:</strong> Creates liquidity by finding multi-party and non-simultaneous swap opportunities.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>AI-Powered Suggestions:</strong> Proactively recommends matches based on user behavior and platform-wide trends.</span></li>
+                        </ul>
+                    </div>
+                     <div x-show="activeFeature === 'legal'" x-cloak>
+                        <ul class="space-y-3 text-zinc-300">
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Dynamic Legal Agreements:</strong> Auto-generates legally-vetted, jurisdiction-aware occupancy contracts.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Bespoke Insurance Integration:</strong> Mandatory, specialized insurance products that cover the unique risks of a non-monetary exchange.</span></li>
+                           <li class="flex items-start"><span class="accent-text mr-3 mt-1">✓</span><span><strong>Security Deposit Escrow:</strong> Platform-managed escrow for security deposits provides concrete financial protection for both parties.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="monetization" class="py-20 md:py-32" x-intersect:enter="activeSection = 'monetization'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title text-zinc-800">5. Monetization Strategy</h2>
+                    <p class="mt-4 text-lg secondary-text">Our revenue is generated by providing the trust, tools, and legal framework that make these high-value exchanges possible.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <div class="bg-white p-8 rounded-2xl border-2 border-transparent space-y-4">
+                        <h4 class="text-lg font-bold">1. Tiered Subscriptions</h4>
+                        <p class="text-sm secondary-text">Annual fees provide access to our ecosystem, with premium tiers for users who value convenience and high-touch support.</p>
+                        <div class="pt-4 space-y-2">
+                             <p class="font-semibold text-zinc-800">Pioneer Tier: <span class="accent-text">$299/year</span></p>
+                             <p class="font-semibold text-zinc-800">Navigator Tier: <span class="accent-text">$999/year</span></p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border-2 accent-border shadow-2xl space-y-4">
+                        <h4 class="text-lg font-bold accent-text">2. Per-Exchange Service Fee</h4>
+                        <p class="text-sm secondary-text">A small, flat fee charged to both parties upon the successful finalization of an exchange. This aligns our revenue directly with user success.</p>
+                         <div class="pt-4">
+                             <p class="font-semibold text-zinc-800">Service Fee: <span class="accent-text">~$100 - $250</span></p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-8 rounded-2xl border-2 border-transparent space-y-4">
+                        <h4 class="text-lg font-bold">3. Strategic Partnerships</h4>
+                        <p class="text-sm secondary-text">Revenue-sharing and referral programs with a curated network of partners for insurance, moving, storage, and cleaning services.</p>
+                         <div class="pt-4">
+                             <p class="font-semibold text-zinc-800">Ecosystem Value-Add</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="founder" class="py-20 md:py-32 bg-zinc-900 text-white" x-intersect:enter="activeSection = 'founder'">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl section-title">Meet the Founder: Rohit Chopra</h2>
+                    <p class="mt-4 text-lg text-zinc-300">The vision behind HomeShift comes from a deep understanding of technology, entrepreneurship, and the desire to empower individuals.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                    <div class="flex justify-center md:justify-end">
+                        <img src="https://placehold.co/300x300/404040/FFFFFF?text=FOUNDER+IMAGE+HERE" alt="Rohit Chopra, Founder of HomeShift" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-teal-500 shadow-xl">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-3xl font-bold text-teal-300">Rohit Chopra</h3>
+                        <p class="text-xl font-semibold text-zinc-200">Founder & Visionary Leader, HomeShift</p>
+                        <p class="mt-6 text-lg text-zinc-300">
+                            A Seattle-bred technologist and serial entrepreneur, Rohit Chopra founded HomeShift with the conviction that deeply rooted assets, like homes, should serve as dynamic keys to unlock new life possibilities, empowering individuals with unprecedented flexibility beyond traditional market constraints.
+                        </p>
+                        <ul class="mt-6 space-y-2 text-zinc-300">
+                            <li class="flex items-center justify-center md:justify-start">
+                                <span class="accent-text mr-2 text-xl">✓</span><span>20+ years in Fortune 500 tech</span>
+                            </li>
+                            <li class="flex items-center justify-center md:justify-start">
+                                <span class="accent-text mr-2 text-xl">✓</span><span>Built & operated multiple franchises</span>
+                            </li>
+                        </ul>
+                        <blockquote class="mt-8 italic text-zinc-400 border-l-4 border-teal-500 pl-4">
+                            "At HomeShift, we believe in 'strapping an intelligent system under the complexities of home exchange, so every homeowner can move and live with the flexibility of a global enterprise.'"
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-zinc-900 text-zinc-400 py-6">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>&copy; 2025 HomeShift Inc. A conceptual project based on PRD v1.0.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('counter', (target) => ({
+                value: 0,
+                target: target,
+                init() {
+                    const observer = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting) {
+                            this.animateValue();
+                            observer.disconnect();
+                        }
+                    }, { threshold: 0.5 });
+                    observer.observe(this.$el);
+                },
+                animateValue() {
+                    let start = 0;
+                    const duration = 2000;
+                    const step = (timestamp) => {
+                        if (!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        this.value = Math.floor(progress * this.target);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            this.value = this.target;
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
