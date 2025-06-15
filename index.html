@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeShift: Interactive Product Requirement Document</title>
+    <title>HomeExchange: Interactive Product Requirement Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +62,7 @@
 
     <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#overview" class="text-2xl font-bold accent-text">HomeShift PRD</a>
+            <a href="#overview" class="text-2xl font-bold accent-text">HomeExchange PRD</a>
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
                 <a href="#problem" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'problem' }">Problem</a>
                 <a href="#solution" class="nav-link text-gray-600 hover:accent-text" :class="{ 'accent-text active': activeSection === 'solution' }">Solution</a>
@@ -79,9 +79,9 @@
             <div class="container mx-auto px-6 py-16">
                 <div class="max-w-4xl">
                     <span class="text-sm font-bold uppercase accent-text">PRD Version 1.0 - June 12, 2025</span>
-                    <h1 class="text-5xl md:text-7xl font-black text-zinc-800 leading-tight my-4">HomeShift: Your Home. Your Next Adventure.</h1>
+                    <h1 class="text-5xl md:text-7xl font-black text-zinc-800 leading-tight my-4">HomeExchange: Your Home. Your Next Adventure.</h1>
                     <p class="text-2xl md:text-3xl font-semibold accent-text mb-6">A New Way to Live, Explore, and Thrive Without Buying or Renting.</p>
-                    <p class="text-lg md:text-xl secondary-text">HomeShift is a revolutionary platform for homeowners to seamlessly exchange homes for extended periods, opening doors to new cities, lifestyles, or temporary relocations without the massive costs and hassles of traditional real estate. This document outlines the product requirements for HomeShift, a platform designed to unlock long-term lifestyle flexibility for homeowners by eliminating the friction of traditional real estate transactions.</p>
+                    <p class="text-lg md:text-xl secondary-text">HomeExchange is a revolutionary platform for homeowners to seamlessly exchange homes for extended periods, opening doors to new cities, lifestyles, or temporary relocations without the massive costs and hassles of traditional real estate. This document outlines the product requirements for HomeExchange, a platform designed to unlock long-term lifestyle flexibility for homeowners by eliminating the friction of traditional real estate transactions.</p>
                 </div>
                 <div class="mt-12 grid md:grid-cols-3 gap-8">
                     <div class="bg-zinc-50 p-6 rounded-lg">
@@ -130,8 +130,8 @@
         <section id="solution" class="py-20 md:py-32 bg-zinc-800 text-white" x-intersect:enter="activeSection = 'solution'">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
-                    <h2 class="text-4xl md:text-5xl section-title">2. The HomeShift Solution: How it Works</h2>
-                    <p class="mt-4 text-lg text-zinc-300">HomeShift empowers homeowners to embark on long-term home exchanges. You continue to own your home, and simply swap living spaces with a trusted counterpart. It's a game-changing way to experience new places, try new lifestyles, or manage life transitions without the financial burden of buying or continuous renting. This is how we bring unprecedented flexibility to your doorstep.</p>
+                    <h2 class="text-4xl md:text-5xl section-title">2. The HomeExchange Solution: How it Works</h2>
+                    <p class="mt-4 text-lg text-zinc-300">HomeExchange empowers homeowners to embark on long-term home exchanges. You continue to own your home, and simply swap living spaces with a trusted counterpart. It's a game-changing way to experience new places, try new lifestyles, or manage life transitions without the financial burden of buying or continuous renting. This is how we bring unprecedented flexibility to your doorstep.</p>
                 </div>
                 <div class="bg-zinc-700 p-10 rounded-2xl max-w-5xl mx-auto">
                     <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -173,7 +173,7 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
                     <h2 class="text-4xl md:text-5xl section-title text-zinc-800">3. User Personas</h2>
-                    <p class="mt-4 text-lg secondary-text">HomeShift serves distinct user archetypes united by a common need for flexibility. Select a persona to view their profile.</p>
+                    <p class="mt-4 text-lg secondary-text">HomeExchange serves distinct user archetypes united by a common need for flexibility. Select a persona to view their profile.</p>
                 </div>
                 <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
                     <button @click="activeUser = 'family'" :class="{'accent-bg text-white': activeUser === 'family', 'bg-white text-zinc-700': activeUser !== 'family'}" class="px-4 py-2 text-sm font-semibold rounded-full shadow">Growing Family</button>
@@ -227,7 +227,7 @@
                         <p class="text-sm text-zinc-400 mt-1">Solving the discovery and liquidity problem.</p>
                     </button>
                     <button @click="activeFeature = 'legal'" class="p-6 text-left rounded-b-lg md:rounded-r-lg md:rounded-bl-none" :class="{'bg-zinc-700': activeFeature === 'legal', 'bg-zinc-900/50 hover:bg-zinc-900/80': activeFeature !== 'legal'}">
-                        <h4 class="text-lg font-bold text-teal-300">⚖️ HomeShift Legal Guardian</h4>
+                        <h4 class="text-lg font-bold text-teal-300">⚖️ HomeExchange Legal Guardian</h4>
                         <p class="text-sm text-zinc-400 mt-1">Solving the contract and insurance problem.</p>
                     </button>
                 </div>
@@ -294,17 +294,17 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
                     <h2 class="text-4xl md:text-5xl section-title">Meet the Founder: Rohit Chopra</h2>
-                    <p class="mt-4 text-lg text-zinc-300">The vision behind HomeShift comes from a deep understanding of technology, entrepreneurship, and the desire to empower individuals.</p>
+                    <p class="mt-4 text-lg text-zinc-300">The vision behind HomeExchange comes from a deep understanding of technology, entrepreneurship, and the desire to empower individuals.</p>
                 </div>
                 <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
                     <div class="flex justify-center md:justify-end">
-                        <img src="https://placehold.co/300x300/404040/FFFFFF?text=FOUNDER+IMAGE+HERE" alt="Rohit Chopra, Founder of HomeShift" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-teal-500 shadow-xl">
+                        <img src="https://placehold.co/300x300/404040/FFFFFF?text=FOUNDER+IMAGE+HERE" alt="Rohit Chopra, Founder of HomeExchange" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-teal-500 shadow-xl">
                     </div>
                     <div class="text-center md:text-left">
                         <h3 class="text-3xl font-bold text-teal-300">Rohit Chopra</h3>
-                        <p class="text-xl font-semibold text-zinc-200">Founder & Visionary Leader, HomeShift</p>
+                        <p class="text-xl font-semibold text-zinc-200">Founder & Visionary Leader, HomeExchange</p>
                         <p class="mt-6 text-lg text-zinc-300">
-                            A Seattle-bred technologist and serial entrepreneur, Rohit Chopra founded HomeShift with the conviction that deeply rooted assets, like homes, should serve as dynamic keys to unlock new life possibilities, empowering individuals with unprecedented flexibility beyond traditional market constraints.
+                            A Seattle-bred technologist and serial entrepreneur, Rohit Chopra founded HomeExchange with the conviction that deeply rooted assets, like homes, should serve as dynamic keys to unlock new life possibilities, empowering individuals with unprecedented flexibility beyond traditional market constraints.
                         </p>
                         <ul class="mt-6 space-y-2 text-zinc-300">
                             <li class="flex items-center justify-center md:justify-start">
@@ -315,7 +315,7 @@
                             </li>
                         </ul>
                         <blockquote class="mt-8 italic text-zinc-400 border-l-4 border-teal-500 pl-4">
-                            "At HomeShift, we believe in 'strapping an intelligent system under the complexities of home exchange, so every homeowner can move and live with the flexibility of a global enterprise.'"
+                            "At HomeExchange, we believe in 'strapping an intelligent system under the complexities of home exchange, so every homeowner can move and live with the flexibility of a global enterprise.'"
                         </blockquote>
                     </div>
                 </div>
@@ -325,7 +325,7 @@
     
     <footer class="bg-zinc-900 text-zinc-400 py-6">
         <div class="container mx-auto px-6 text-center text-sm">
-            <p>&copy; 2025 HomeShift Inc. A conceptual project based on PRD v1.0.</p>
+            <p>&copy; 2025 HomeExchange Inc. A conceptual project based on PRD v1.0.</p>
         </div>
     </footer>
 
